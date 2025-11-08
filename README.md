@@ -29,3 +29,6 @@ Each title can be marked as “watched,” allowing users to maintain a personal
 - Personalized progress tracking for each actor.
 - User accounts stored securely in MongoDB.
 - Fast and responsive UI built with Next.js and Tailwind CSS.
+
+## Team Memebers
+- Matt Anderson
