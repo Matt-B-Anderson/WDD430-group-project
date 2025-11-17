@@ -4,15 +4,15 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
-        "dev": "ts-node src/index.ts",
+        "dev": "ts-node src/server.ts",
         "build": "tsc",
-        "start": "node dist/index.js"
+        "start": "node dist/server.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "type": "module",
     "dependencies": {
+        "@vercel/node": "^5.5.6",
         "cors": "^2.8.5",
         "dotenv": "^17.2.3",
         "express": "^5.1.0",
