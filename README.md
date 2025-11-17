@@ -1,34 +1,66 @@
-# Actor Watchlist Tracker
+# Handcrafted Haven
 
-## Project Overview
+## Overview
+**Handcrafted Haven** is an innovative web application that provides a dedicated platform for artisans and crafters to showcase and sell their unique handmade creations. Acting as a virtual marketplace, the platform connects skilled creators with customers who value the quality, creativity, and authenticity of handcrafted goods.
 
-Actor Watchlist Tracker is a full-stack web application that helps users keep track of the movies and TV shows they’ve watched, organized by actor or actress. By searching for a specific performer, the app retrieves data from the TMDb API and displays their complete filmography, including both movies and television appearances, in chronological order.
+The application emphasizes community, sustainability, and support for local artisans. By offering user-friendly features, secure e-commerce functionality, and opportunities for personalization and engagement, Handcrafted Haven aims to transform how handcrafted products are discovered, appreciated, and purchased.
 
-Each title can be marked as “watched,” allowing users to maintain a personalized viewing record and track their progress through an actor’s career. Whether you’re completing an actor’s entire body of work or simply logging what you’ve seen, Actor Watchlist Tracker provides a clean, intuitive experience designed for movie lovers.
+## Features and Functionality
 
-## Tech Stack
+### Seller Profiles
+- Authenticated sellers can create dedicated profiles.
+- Profiles allow artisans to share their story, highlight their craftsmanship, and display a curated collection of their handcrafted items.
+- Sellers can add item descriptions, pricing, and images.
+
+### Product Listings
+- Artisans can list handcrafted items with detailed descriptions, prices, and photos.
+- Users can browse the full catalog and filter products by:
+  - Category
+  - Price range
+  - Other relevant criteria
+
+### Reviews and Ratings
+- Any user can leave a written review and star rating on a product.
+
+## Design & Standards
+
+### Web Development Best Practices
+The application follows modern development standards, including:
+- **Performance optimization**
+- **Validation** and clean, semantic HTML
+- **Accessibility** following **WCAG 2.1 Level AA**
+- **Search Engine Optimization (SEO)**
+- **Usability** and intuitive user experience
+
+### Responsive Design
+- Fully responsive layout optimized for desktops, tablets, and mobile devices.
+
+### Branding & UI
+- Consistent and cohesive interface, including:
+  - Color palette
+  - Typography
+  - Layout components
+- Clear, intuitive navigation with a logical hierarchy.
+
+## Technology Stack
 
 ### Frontend
-- Built with **React** and **TypeScript** using **Next.js** for server-side rendering and routing.
-- Styled with **Tailwind CSS** to create a modern, responsive, and accessible user interface.
+- **HTML**, **CSS**, **JavaScript**
+- **Next.js** for modern React-based routing, rendering, and performance
 
 ### Backend
-- Developed with **Node.js** and **Express** to handle API requests, authentication, and data persistence.
-- Uses **MongoDB** to store user profiles, tracked movies, and watch progress.
+- Built with **Node.js**
+- Uses a **database** for storing users, products, and reviews (database type may vary by team decision)
 
-### External Data Source
-- Integrates with the **TMDb (The Movie Database) API** for reliable movie, TV, and actor data.
+### Project Management
+- **GitHub Boards** for workflow and task tracking
 
-### Authentication
-- Includes a secure **login and registration system**, allowing users to save and sync their tracked filmography across devices.
+### Code Management
+- Version control handled through **Git**
+- Repository hosted on **GitHub**
 
-## Core Features
-- Actor/Actress search with filmography results powered by TMDb.
-- Chronological listing of movies and TV shows.
-- Ability to mark titles as “watched.”
-- Personalized progress tracking for each actor.
-- User accounts stored securely in MongoDB.
-- Fast and responsive UI built with Next.js and Tailwind CSS.
+### Deployment / Cloud Platform
+- Deployed using **Vercel**
 
 ## Team Memebers
 - Matt Anderson
