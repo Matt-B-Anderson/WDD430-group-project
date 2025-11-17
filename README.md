@@ -64,3 +64,4 @@ The application follows modern development standards, including:
 
 ## Team Memebers
 - Matt Anderson
+- John Ayomide Adebayo
