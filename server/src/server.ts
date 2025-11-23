@@ -4,11 +4,15 @@ dotenv.config();
 import express from "express";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import sql from "./db";
+import productsRoute from "./routes/products";
 
 const app = express();
 app.use(express.json());
 
+// routes
+app.use("/products", productsRoute);
 
+// test route
 app.get("/test-db", async (req, res) => {
 	try {
 		const result: any = await sql`SELECT NOW()`;
@@ -24,14 +28,15 @@ app.get("/test-db", async (req, res) => {
 	}
 });
 
-if (process.env.ENV === "local") {
-	const PORT = process.env.PORT || 3000;
+// LOCAL DEVELOPMENT (if not running on Vercel)
+if (!process.env.VERCEL) {
+	const PORT = process.env.PORT || 3001;
 	app.listen(PORT, () => {
 		console.log(`Local server running on http://localhost:${PORT}`);
 	});
 }
 
-
+// VERCEL HANDLER
 export default function handler(req: VercelRequest, res: VercelResponse) {
 	return app(req as any, res as any);
 }
