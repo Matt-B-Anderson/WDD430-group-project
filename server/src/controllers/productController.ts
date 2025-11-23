@@ -4,7 +4,7 @@ export async function getAllProducts(req: any, res: any) {
 	try {
 		const products = await sql`
       SELECT 
-        p.id, p.name, p.description, p.price, 
+        p.id, p.title, p.description, p.price, 
         p.category, p.image_url, p.created_at,
         s.name AS seller_name
       FROM products p
