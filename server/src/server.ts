@@ -4,11 +4,12 @@ dotenv.config();
 import express from "express";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import sql from "./db";
+import productsRoute from "./routes/products";
 
 const app = express();
 app.use(express.json());
 
-
+app.use("/products", productsRoute);
 app.get("/test-db", async (req, res) => {
 	try {
 		const result: any = await sql`SELECT NOW()`;
