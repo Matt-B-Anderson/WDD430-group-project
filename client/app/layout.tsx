@@ -23,10 +23,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-            <body className="bg-(--background) text-(--foreground)">
+            <body className="bg-\[var\(--background\)\] text-\[var\(--foreground\)\]">
 
                 {/* HEADER */}
-                <header className="border-b border-(--border) bg-(--background) sticky top-0 z-40">
+                <header className="border-b border-\[var\(--border\)\] bg-[#3A2E2A] sticky top-0 z-40">
                     <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
                         <Link href="/" className="text-2xl font-serif font-bold">
@@ -36,14 +36,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <input
                             type="text"
                             placeholder="Search handcrafted items..."
-                            className="hidden md:block bg-(--card) border border-(--border) px-4 py-2 rounded-lg w-1/3 text-(--foreground)"
+                            className="hidden md:block bg-\[var\(--card\)\] border border-\[var\(--border\)\] px-4 py-2 rounded-lg w-1/3 text-\[var\(--foreground\)\]"
                         />
 
                         <nav className="space-x-6 font-medium">
-                            <Link href="/products" className="hover:text-(--accent)">
+                            <Link href="/products" className="hover:text-\[var\(--accent\)\]">
                                 Products
                             </Link>
-                            <Link href="/login" className="hover:text-(--accent)">
+                            <Link href="/login" className="hover:text-\[var\(--accent\)\]">
                                 Login
                             </Link>
                         </nav>
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </div>
                 </header>
 
-                {/* MAIN CONTENT */}
+                {/* MAIN */}
                 <main className="min-h-[75vh]">{children}</main>
 
                 {/* FOOTER */}

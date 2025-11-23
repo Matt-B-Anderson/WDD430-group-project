@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 async function getProduct(id: string) {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
@@ -13,19 +11,17 @@ async function getProduct(id: string) {
 export default async function ProductDetailPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
-    const product = await getProduct(params.id);
+    const { id } = await params;
+    const product = await getProduct(id);
 
     return (
         <div className="max-w-6xl mx-auto px-6 mt-16">
 
-            <Link
-                href="/products"
-                className="text-(--accent) font-semibold hover:underline"
-            >
+            <a href="/products" className="text-\[var\(--accent\)\] font-semibold hover:underline">
                 ← Back to Products
-            </Link>
+            </a>
 
             <div className="mt-10 grid md:grid-cols-2 gap-12">
 
@@ -38,34 +34,21 @@ export default async function ProductDetailPage({
                 <div>
                     <h1 className="text-4xl font-serif font-bold">{product.name}</h1>
 
-                    <span className="inline-block mt-3 text-sm px-3 py-1 rounded-full bg-(--border) text-(--foreground)">
+                    <span className="inline-block mt-3 text-sm px-3 py-1 rounded-full bg-\[var\(--border\)\] text-\[var\(--foreground\)\]">
                         {product.category}
                     </span>
 
-                    {/* Price */}
-                    <p className="text-(--accent) text-3xl font-bold mt-6">
+                    <p className="text-\[var\(--accent\)\] text-3xl font-bold mt-6">
                         ${product.price}
                     </p>
 
-                    <div className="mt-8 flex items-center gap-4">
-                        <img
-                            src={product.seller_image}
-                            className="w-16 h-16 rounded-full object-cover border border-(--border)"
-                        />
-                        <div>
-                            <p className="font-serif text-xl font-bold">{product.seller_name}</p>
-                            <p className="text-(--foreground)/70">{product.seller_bio}</p>
-                        </div>
-                    </div>
-
-
-                    <p className="mt-8 leading-relaxed text-(--foreground)/80 text-lg">
+                    <p className="mt-8 text-lg leading-relaxed text-\[var\(--foreground\)\]/80">
                         {product.description}
                     </p>
 
-                    <button className="mt-10 w-full px-6 py-4 bg-(--accent) text-white rounded-lg text-lg font-semibold hover:opacity-90">
-                        Add to Cart
-                    </button>
+                    <p className="mt-8 text-lg leading-relaxed text-\[var\(--foreground\)\]/80">
+                        {`By ${product.seller_name}`}
+                    </p>
                 </div>
             </div>
         </div>

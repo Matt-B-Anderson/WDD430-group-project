@@ -1,44 +1,47 @@
 @import "tailwindcss";
 
-/* LIGHT MODE */
-:root {
-    --background: #F5EDE0;
-    --foreground: #3A2E2A;
-    --card: #FAF7F2;
-    --border: #E0D6CF;
-    --accent: #D97C59;
-}
+@layer base {
 
-/* DARK MODE */
-@media (prefers-color-scheme: dark) {
+    /* LIGHT MODE */
     :root {
-        --background: #2A211D;
-        --foreground: #FAF7F2;
-        --card: #3A2E2A;
-        --border: #4F4F4F;
+        --background: #F5EDE0;
+        --foreground: #3A2E2A;
+        --card: #FAF7F2;
+        --border: #E0D6CF;
         --accent: #D97C59;
     }
-}
 
-html {
-    font-family: var(--font-inter), sans-serif;
-}
+    /* DARK MODE */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --background: #2A211D;
+            --foreground: #FAF7F2;
+            --card: #3A2E2A;
+            --border: #4F4F4F;
+            --accent: #D97C59;
+        }
+    }
 
-body {
-    background: var(--background);
-    color: var(--foreground);
-}
+    html {
+        font-family: var(--font-inter), sans-serif;
+    }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--font-playfair), serif;
-    font-weight: 700;
-}
+    body {
+        background: var(--background);
+        color: var(--foreground);
+    }
 
-p {
-    line-height: 1.6;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-playfair), serif;
+        font-weight: 700;
+    }
+
+    p {
+        line-height: 1.6;
+    }
 }
