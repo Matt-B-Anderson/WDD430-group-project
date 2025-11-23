@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 async function getProducts() {
     const res = await fetch(
         process.env.NEXT_PUBLIC_API_URL + "/products",
@@ -19,9 +21,10 @@ export default async function ProductsPage() {
             <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
 
                 {products.map((p: any) => (
-                    <div
-                        key={p.id}
-                        className="bg-(--background) border border-(--border) rounded-xl shadow-sm hover:shadow-md transition"
+                    <Link 
+                        href={`/products/${p.id}`} 
+                        key={p.id} 
+                        className="bg-(--background) border border-(--border) rounded-xl shadow-sm hover:shadow-md transition block"
                     >
                         <img
                             src={p.image_url}
@@ -46,7 +49,7 @@ export default async function ProductsPage() {
 
                             <p className="mt-2 text-[#D4A350]">★★★★☆</p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
 
             </div>
