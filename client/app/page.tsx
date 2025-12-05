@@ -1,6 +1,31 @@
 import Link from "next/link";
 
-export default function Home() {
+async function getProducts() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+        cache: "no-store",
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch products");
+    }
+
+    return res.json();
+}
+
+async function getSellers() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sellers`, {
+        cache: "no-store",
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch sellers");
+
+    return res.json();
+}
+
+export default async function Home() {
+    const products = await getProducts();
+    const sellers = await getSellers();
+
     return (
         <main className="text-[var(--foreground)] bg-[var(--background)]">
 
@@ -63,24 +88,32 @@ export default function Home() {
                 </h3>
 
                 <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 mt-12 px-6">
-                    {[1, 2, 3].map((i) => (
+                    {sellers.slice(0, 3).map((seller: any) => (
                         <div
-                            key={i}
+                            key={seller.id}
                             className="bg-[var(--card)] border border-[var(--border)] p-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-1 transition"
                         >
                             <img
                                 className="w-full h-56 object-cover rounded-lg mb-4"
-                                src={`https://picsum.photos/seed/seller${i}/400/300`}
-                                alt="Artisan"
+                                src={seller.profile_image}
+                                alt={seller.name}
                             />
-                            <h4 className="text-xl font-serif font-bold">Artisan Name</h4>
-                            <p className="text-[var(--foreground)]/70">Specialty Craft</p>
 
-                            <button className="mt-4 px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90">
+                            <h4 className="text-xl font-serif font-bold">{seller.name}</h4>
+
+                            <p className="text-[var(--foreground)]/70">
+                                {seller.bio.substring(0, 60)}...
+                            </p>
+
+                            <Link
+                                href={`/sellers/${seller.id}`}
+                                className="mt-4 inline-block px-4 py-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90"
+                            >
                                 View Profile
-                            </button>
+                            </Link>
                         </div>
                     ))}
+
                 </div>
             </section>
 
@@ -91,30 +124,34 @@ export default function Home() {
                 </h3>
 
                 <div className="max-w-7xl mx-auto grid md:grid-cols-3 lg:grid-cols-4 gap-8 mt-12 px-6">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                        <div
-                            key={i}
-                            className="bg-[var(--background)] border border-[var(--border)] rounded-xl shadow-sm hover:shadow-md transition"
+                    {products.slice(0, 8).map((product: any) => (
+                        <a
+                            key={product.id}
+                            href={`/products/${product.id}`}
+                            className="bg-[var(--background)] border border-[var(--border)] rounded-xl shadow-sm hover:shadow-md transition block"
                         >
                             <img
                                 className="w-full h-48 object-cover rounded-t-xl"
-                                src={`https://picsum.photos/seed/prod${i}/500/400`}
-                                alt="Product"
+                                src={product.image_url}
+                                alt={product.title}
                             />
+
                             <div className="p-4">
-                                <h4 className="text-xl font-serif font-bold">Product Name</h4>
+                                <h4 className="text-xl font-serif font-bold">
+                                    {product.title}
+                                </h4>
 
                                 <p className="text-[var(--accent)] font-semibold mt-1">
-                                    $24.99
+                                    ${product.price}
                                 </p>
 
                                 <p className="text-[var(--foreground)]/70 mt-1">
-                                    Handmade by Artisan
+                                    Handmade by {product.seller_name}
                                 </p>
 
                                 <p className="mt-2 text-[#D4A350]">★★★★☆</p>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
             </section>

@@ -42,8 +42,8 @@ export default async function ProductsPage() {
                                 ${p.price}
                             </p>
 
-                            <p className="text-\[var\(--foreground\)\]/70 mt-1">
-                                {p.seller_name ? `By ${p.seller_name}` : "By Unknown Artisan"}
+                            <p className="text-[var(--foreground)]/60">
+                                by <Link href={`/sellers/${p.seller_id}`} className="underline hover:text-[var(--accent)]">{p.seller_name}</Link>
                             </p>
                         </div>
                     </Link>
