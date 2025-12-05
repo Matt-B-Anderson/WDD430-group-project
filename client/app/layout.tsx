@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import { Playfair_Display, Inter } from "next/font/google";
+import { useSession } from "next-auth/react";
 
 // Load fonts as CSS variables
 const playfair = Playfair_Display({
@@ -21,6 +22,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+    const { data: session } = useSession();
     return (
         <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
             <body className="bg-\[var\(--background\)\] text-\[var\(--foreground\)\]">
@@ -39,14 +41,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                             className="hidden md:block bg-\[var\(--card\)\] border border-\[var\(--border\)\] px-4 py-2 rounded-lg w-1/3 text-\[var\(--foreground\)\]"
                         />
 
-                        <nav className="space-x-6 font-medium">
-                            <Link href="/products" className="hover:text-\[var\(--accent\)\]">
-                                Products
-                            </Link>
-                            <Link href="/login" className="hover:text-\[var\(--accent\)\]">
-                                Login
-                            </Link>
-                        </nav>
+                        <nav className="space-x-6">
+                        <Link href="/products">Products</Link>
+
+                        {session?.user ? (
+                            <>
+                                <Link href="/dashboard">Dashboard</Link>
+                                <Link href="/api/auth/logout">Logout</Link>
+                            </>
+                        ) : (
+                            <Link href="/login">Login</Link>
+                        )}
+                    </nav>
 
                     </div>
                 </header>
