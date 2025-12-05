@@ -5,12 +5,14 @@ import express from "express";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import sql from "./db";
 import productsRoute from "./routes/products";
+import sellersRoute from "./routes/sellers";
 
 const app = express();
 app.use(express.json());
 
 // routes
 app.use("/products", productsRoute);
+app.use("/sellers", sellersRoute);
 
 // test route
 app.get("/test-db", async (req, res) => {
