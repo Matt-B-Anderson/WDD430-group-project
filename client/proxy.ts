@@ -4,21 +4,16 @@ import { NextResponse } from "next/server";
 export default withAuth(
 	function middleware(req) {
 		const { pathname } = req.nextUrl;
-		const user = req.nextauth.token;
+		const token = req.nextauth.token;
 
-		if (!user) {
-			const loginUrl = new URL("/login", req.url);
-			return NextResponse.redirect(loginUrl);
+		if (!token) {
+			return NextResponse.redirect(new URL("/login", req.url));
 		}
 
 		if (pathname.startsWith("/sellers")) {
-			if (user.role !== "seller") {
+			if (token.role !== "seller") {
 				return NextResponse.redirect(new URL("/", req.url));
 			}
-		}
-
-		if (pathname.includes("/dashboard") && user.role !== "seller") {
-			return NextResponse.redirect(new URL("/", req.url));
 		}
 
 		return NextResponse.next();
@@ -30,3 +25,10 @@ export default withAuth(
 		},
 	}
 );
+
+export const config = {
+	matcher: [
+		"/dashboard/:path*",
+		"/sellers/:path*",
+	],
+};
