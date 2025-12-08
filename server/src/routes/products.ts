@@ -1,12 +1,20 @@
-import express from "express";
-import { getAllProducts, getProductById } from "../controllers/productController";
+import { Router } from "express";
+import {
+	getFilteredProducts,
+	getProductById,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+} from "../controllers/productController";
 
-const router = express.Router();
+const router = Router();
 
-// GET /products[?seller_id=...]
-router.get("/", getAllProducts);
-
-// GET /products/:id
+router.get("/", getFilteredProducts);
 router.get("/:id", getProductById);
+
+// These are for sellers
+router.post("/", createProduct);
+router.put("/:id", updateProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;

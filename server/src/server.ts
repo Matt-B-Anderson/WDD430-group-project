@@ -6,11 +6,23 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import sql from "./db";
 import productsRoute from "./routes/products";
 import sellersRoute from "./routes/sellers";
+import authRoute from "./routes/auth";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
+app.use(
+	cors({
+		origin: `${process.env.NEXT_PUBLIC_CLIENT_URL}`,
+		credentials: true,
+		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+		allowedHeaders: ["Content-Type", "Authorization"],
+	})
+);
+
 // routes
+app.use("/auth", authRoute);
 app.use("/products", productsRoute);
 app.use("/sellers", sellersRoute);
 

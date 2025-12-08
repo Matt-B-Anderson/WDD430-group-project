@@ -1,8 +1,11 @@
 import "./globals.css";
 import Link from "next/link";
 import { Playfair_Display, Inter } from "next/font/google";
+import { Providers } from "./providers";
+import { NavBar } from "./navbar";
 
-// Load fonts as CSS variables
+
+// Load fonts
 const playfair = Playfair_Display({
     subsets: ["latin"],
     weight: ["400", "700"],
@@ -20,78 +23,71 @@ export const metadata = {
     description: "Authentic artisan-made creations.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     return (
         <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-            <body className="bg-\[var\(--background\)\] text-\[var\(--foreground\)\]">
+            <body className="bg-[var(--background)] text-[var(--foreground)]">
+                <Providers>
 
-                {/* HEADER */}
-                <header className="border-b border-\[var\(--border\)\] bg-[#3A2E2A] sticky top-0 z-40">
-                    <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+                    <header className="border-b border-[var(--border)] bg-[var(--background)] sticky top-0 z-40">
+                        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
-                        <Link href="/" className="text-2xl font-serif font-bold">
-                            Handcrafted Haven
-                        </Link>
-
-                        <input
-                            type="text"
-                            placeholder="Search handcrafted items..."
-                            className="hidden md:block bg-\[var\(--card\)\] border border-\[var\(--border\)\] px-4 py-2 rounded-lg w-1/3 text-\[var\(--foreground\)\]"
-                        />
-
-                        <nav className="space-x-6 font-medium">
-                            <Link href="/products" className="hover:text-\[var\(--accent\)\]">
-                                Products
+                            <Link href="/" className="text-2xl font-serif font-bold">
+                                Handcrafted Haven
                             </Link>
-                            <Link href="/login" className="hover:text-\[var\(--accent\)\]">
-                                Login
-                            </Link>
-                        </nav>
 
-                    </div>
-                </header>
+                            <NavBar />
 
-                {/* MAIN */}
-                <main className="min-h-[75vh]">{children}</main>
-
-                {/* FOOTER */}
-                <footer className="bg-[#3A2E2A] text-[#F5EDE0] py-12 mt-20">
-                    <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 px-6">
-
-                        <div>
-                            <h4 className="font-serif font-bold text-xl mb-3">Handcrafted Haven</h4>
-                            <p>Celebrating meaningful craftsmanship.</p>
                         </div>
+                    </header>
 
-                        <div>
-                            <h4 className="font-serif font-bold text-lg mb-3">Company</h4>
-                            <ul className="space-y-2">
-                                <li>About</li>
-                                <li>Community</li>
-                                <li>Contact</li>
-                            </ul>
+
+                    <main className="min-h-[75vh]">
+                        {children}
+                    </main>
+
+                    <footer className="bg-[#3A2E2A] text-[#F5EDE0] py-12 mt-20">
+                        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10 px-6">
+
+                            <div>
+                                <h4 className="font-serif font-bold text-xl mb-3">Handcrafted Haven</h4>
+                                <p>Celebrating meaningful craftsmanship.</p>
+                            </div>
+
+                            <div>
+                                <h4 className="font-serif font-bold text-lg mb-3">Company</h4>
+                                <ul className="space-y-2">
+                                    <li>About</li>
+                                    <li>Community</li>
+                                    <li>Contact</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="font-serif font-bold text-lg mb-3">For Sellers</h4>
+                                <ul className="space-y-2">
+                                    <li>Become a Seller</li>
+                                    <li>Dashboard</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="font-serif font-bold text-lg mb-3">Help</h4>
+                                <ul className="space-y-2">
+                                    <li>Shipping</li>
+                                    <li>FAQ</li>
+                                    <li>Returns</li>
+                                </ul>
+                            </div>
+
                         </div>
+                    </footer>
 
-                        <div>
-                            <h4 className="font-serif font-bold text-lg mb-3">For Sellers</h4>
-                            <ul className="space-y-2">
-                                <li>Become a Seller</li>
-                                <li>Dashboard</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 className="font-serif font-bold text-lg mb-3">Help</h4>
-                            <ul className="space-y-2">
-                                <li>Shipping</li>
-                                <li>FAQ</li>
-                                <li>Returns</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </footer>
-
+                </Providers>
             </body>
         </html>
     );
