@@ -7,10 +7,12 @@ import sql from "./db";
 import productsRoute from "./routes/products";
 import sellersRoute from "./routes/sellers";
 import authRoute from "./routes/auth";
+import reviewRoutes from "./routes/reviews";
 import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
 	cors({
@@ -25,6 +27,7 @@ app.use(
 app.use("/auth", authRoute);
 app.use("/products", productsRoute);
 app.use("/sellers", sellersRoute);
+app.use("/reviews", reviewRoutes);
 
 // test route
 app.get("/test-db", async (req, res) => {
