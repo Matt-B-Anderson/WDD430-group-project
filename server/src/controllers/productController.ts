@@ -2,33 +2,52 @@ import { Request, Response } from "express";
 import sql from "../db";
 
 
-export async function getAllProducts(req: Request, res: Response) {
+export async function getFilteredProducts(req: Request, res: Response) {
     try {
-        const { seller_id } = req.query;
+        const { category, min, max, search } = req.query;
 
-        let products;
+        const conditions = [];
+        const params = [];
 
-        if (seller_id) {
-            products = await sql`
-                SELECT p.*, s.name AS seller_name
-                FROM products p
-                LEFT JOIN sellers s ON p.seller_id = s.id
-                WHERE p.seller_id = ${seller_id as string}
-                ORDER BY p.created_at DESC
-            `;
-        } else {
-            products = await sql`
-                SELECT p.*, s.name AS seller_name
-                FROM products p
-                LEFT JOIN sellers s ON p.seller_id = s.id
-                ORDER BY p.created_at DESC
-            `;
+        if (category) {
+            conditions.push(`p.category = $${params.length + 1}`);
+            params.push(category);
         }
 
+        if (min) {
+            conditions.push(`p.price >= $${params.length + 1}`);
+            params.push(Number(min));
+        }
+
+        if (max) {
+            conditions.push(`p.price <= $${params.length + 1}`);
+            params.push(Number(max));
+        }
+
+        if (search) {
+            conditions.push(`(p.title ILIKE $${params.length + 1} OR p.description ILIKE $${params.length + 1})`);
+            params.push(`%${search}%`);
+        }
+
+        const where = conditions.length > 0 
+            ? `WHERE ${conditions.join(" AND ")}`
+            : "";
+
+        const query = `
+            SELECT p.*, s.name AS seller_name
+            FROM products p
+            LEFT JOIN sellers s ON p.seller_id = s.id
+            ${where}
+            ORDER BY p.created_at DESC
+        `;
+
+        const products = await sql.unsafe(query, params);
+
         res.json(products);
-    } catch (error: any) {
-        console.error("Error fetching products:", error);
-        res.status(500).json({ error: error.message });
+
+    } catch (error) {
+        console.error("Product filter error:", error);
+        res.status(500).json({ error: "Failed to retrieve products" });
     }
 }
 

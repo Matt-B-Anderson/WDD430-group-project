@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-	getAllProducts,
+	getFilteredProducts,
 	getProductById,
 	createProduct,
 	updateProduct,
@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.get("/", getAllProducts);
+router.get("/", getFilteredProducts);
 router.get("/:id", getProductById);
 
 // These are for sellers

@@ -1,55 +1,98 @@
-import Link from "next/link";
+"use client";
 
-async function getProducts() {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
-        { cache: "no-store" }
-    );
+import { useState, useEffect } from "react";
 
-    if (!res.ok) throw new Error("Failed to fetch products");
-    return res.json();
-}
+export default function ProductsPage() {
+    const [products, setProducts] = useState([]);
+    const [category, setCategory] = useState("");
+    const [min, setMin] = useState("");
+    const [max, setMax] = useState("");
+    const [search, setSearch] = useState("");
 
-export default async function ProductsPage() {
-    const products = await getProducts();
+    useEffect(() => {
+        async function load() {
+            const params = new URLSearchParams();
+
+            if (category) params.append("category", category);
+            if (min) params.append("min", min);
+            if (max) params.append("max", max);
+            if (search) params.append("search", search);
+
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/products?${params.toString()}`
+            );
+
+            const data = await res.json();
+            setProducts(data);
+        }
+
+        load();
+    }, [category, min, max, search]);
 
     return (
-        <div className="max-w-7xl mx-auto px-6 mt-16">
-            <h1 className="text-4xl font-serif font-bold mb-10">Products</h1>
+        <main className="max-w-7xl mx-auto px-6 py-12">
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <section className="bg-[var(--card)] border border-[var(--border)] p-6 rounded-xl mb-8">
+                <h2 className="text-2xl font-serif font-bold mb-4">Filters</h2>
 
-                {products.map((p: any) => (
-                    <Link
-                        href={`/products/${p.id}`}
-                        key={p.id}
-                        className="bg-\[var\(--background\)\] border border-\[var\(--border\)\] rounded-xl shadow-sm hover:shadow-md transition block"
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+                    <select
+                        className="bg-[var(--background)] border border-[var(--border)] p-2 rounded"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                     >
-                        <img
-                            src={p.image_url}
-                            alt={p.name}
-                            className="w-full h-48 object-cover rounded-t-xl"
-                        />
+                        <option value="">All Categories</option>
+                        <option value="Ceramics">Ceramics</option>
+                        <option value="Textiles">Textiles</option>
+                        <option value="Jewelry">Jewelry</option>
+                        <option value="Woodwork">Woodwork</option>
+                        <option value="Home Decor">Home Decor</option>
+                    </select>
 
-                        <div className="p-4">
-                            <h4 className="text-xl font-serif font-bold">{p.name}</h4>
+                    <input
+                        type="number"
+                        placeholder="Min Price"
+                        className="bg-[var(--background)] border border-[var(--border)] p-2 rounded"
+                        value={min}
+                        onChange={(e) => setMin(e.target.value)}
+                    />
 
-                            <span className="inline-block mt-2 text-sm px-3 py-1 rounded-full bg-\[var\(--border\)\] text-\[var\(--foreground\)\]">
-                                {p.category}
-                            </span>
+                    <input
+                        type="number"
+                        placeholder="Max Price"
+                        className="bg-[var(--background)] border border-[var(--border)] p-2 rounded"
+                        value={max}
+                        onChange={(e) => setMax(e.target.value)}
+                    />
 
-                            <p className="text-\[var\(--accent\)\] font-semibold mt-3">
-                                ${p.price}
-                            </p>
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="bg-[var(--background)] border border-[var(--border)] p-2 rounded"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
 
-                            <p className="text-[var(--foreground)]/60">
-                                by <Link href={`/sellers/${p.seller_id}`} className="underline hover:text-[var(--accent)]">{p.seller_name}</Link>
-                            </p>
-                        </div>
-                    </Link>
+                </div>
+            </section>
+
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {products.map((p: any) => (
+                    <div
+                        key={p.id}
+                        className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-sm hover:shadow-md transition"
+                    >
+                        <img src={p.image_url} className="w-full h-48 object-cover rounded" />
+                        <h3 className="mt-3 text-xl font-serif font-bold">{p.title}</h3>
+                        <p className="text-[var(--accent)] font-semibold">${p.price}</p>
+                        <p className="text-[var(--foreground)]/70 text-sm">
+                            {p.seller_name}
+                        </p>
+                    </div>
                 ))}
+            </section>
 
-            </div>
-        </div>
+        </main>
     );
 }
