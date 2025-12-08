@@ -15,13 +15,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-	cors({
-		origin: `${process.env.NEXT_PUBLIC_CLIENT_URL}`,
-		credentials: true,
-		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		allowedHeaders: ["Content-Type", "Authorization"],
-	})
+    cors({
+        origin: (origin, callback) => {
+            const allowed = [
+                "http://localhost:3000",
+                process.env.NEXT_PUBLIC_CLIENT_URL,
+            ];
+
+            if (
+                origin &&
+                (allowed.includes(origin) ||
+                    /\.vercel\.app$/.test(origin))
+            ) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"), false);
+            }
+        },
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
 );
+
 
 // routes
 app.use("/auth", authRoute);
