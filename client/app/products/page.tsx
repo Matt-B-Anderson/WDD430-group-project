@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function ProductsPage() {
@@ -79,8 +80,9 @@ export default function ProductsPage() {
 
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {products.map((p: any) => (
+                    <Link href={`products/${p.id}`} key={p.id}>
                     <div
-                        key={p.id}
+                        
                         className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-sm hover:shadow-md transition"
                     >
                         <img src={p.image_url} className="w-full h-48 object-cover rounded" />
@@ -90,6 +92,7 @@ export default function ProductsPage() {
                             {p.seller_name}
                         </p>
                     </div>
+                    </Link>
                 ))}
             </section>
 
