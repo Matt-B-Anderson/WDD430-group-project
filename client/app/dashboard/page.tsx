@@ -105,7 +105,6 @@ export default function Dashboard() {
                 </>
             )}
 
-            {/* BUYER DASHBOARD */}
             {!isSeller && (
                 <section>
                     <h2 className="text-3xl font-serif font-bold mb-6">
@@ -117,7 +116,6 @@ export default function Dashboard() {
                 </section>
             )}
 
-            {/* MODALS */}
             {showCreateModal && (
                 <AddProductModal
                     sellerId={session.user.seller_id}

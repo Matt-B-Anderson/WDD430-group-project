@@ -3,7 +3,6 @@ import sql from "../db";
 
 export async function getFilteredProducts(req: Request, res: Response) {
 	try {
-		// Extract & validate query params
 		const category =
 			typeof req.query.category === "string" ? req.query.category : undefined;
 
@@ -16,7 +15,6 @@ export async function getFilteredProducts(req: Request, res: Response) {
 		const search =
 			typeof req.query.search === "string" ? req.query.search : undefined;
 
-		// Base WHERE fragment
 		let where = sql`WHERE 1=1`;
 
 		if (category) {
